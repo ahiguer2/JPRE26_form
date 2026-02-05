@@ -50,11 +50,9 @@ body {
 }
 
 .hero__logo {
-  width: 200px;
+  width: 140px;
   height: auto;
   border-radius: 8px;
-  border-left: 4px solid var(--coral);
-  border-right: 4px solid var(--coral);
   background: var(--rose);
 box-shadow: 0 0 10px rgba(213, 107, 76, 0.8);
 filter: saturate(1.2);
