@@ -1,4 +1,4 @@
-﻿const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyqi0JopVzTniJ6waji85AA9Zpte0PQuLCxy3zx0mZszkT4_mmcmuSuhMEBpjH1iRjd/exec";
+﻿const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTG1844qQ9j9T9KfnMXNzVBGYDZm5QD6nVpEQqI1wAKpQCAdEQ8QJUbWRIUrrKmd8V/exec";
 
 function buildId(franja, nom) {
   return `${franja.toLowerCase().replace(/\s+/g, "-")}-${nom
@@ -289,6 +289,7 @@ form.addEventListener("submit", (event) => {
 });
 
 loadData();
+
 
 
 
