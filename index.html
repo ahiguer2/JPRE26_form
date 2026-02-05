@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ca">
   <head>
     <meta charset="utf-8" />
@@ -25,7 +25,11 @@
           <ul class="hero__rules">
             <li>Només correus acabats en <strong>@xtec.cat</strong>.</li>
             <li>Un taller per franja. Màxim 2 franges.</li>
-         </ul>
+          </ul>
+          <p class="hero__support">
+            Necessites ajuda? Escriu a
+            <a href="mailto:programacioirobotica@xtec.cat">programacioirobotica@xtec.cat</a>.
+          </p>
         </div>
       </header>
 
@@ -50,6 +54,16 @@
                 Correu @xtec.cat
                 <input type="email" name="email" placeholder="nom@xtec.cat" required />
               </label>
+              <label>
+                Perfil de participació
+                <select name="rol" required>
+                  <option value="" selected>Selecciona el teu rol</option>
+                  <option value="Assistent">Assistent</option>
+                  <option value="Tallerista">Tallerista</option>
+                  <option value="Presentació d’experiències">Presentació d’experiències</option>
+                  <option value="Organització">Organització</option>
+                </select>
+              </label>
             </div>
 
             <div class="workshops">
@@ -69,9 +83,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=4"></script>
   </body>
 </html>
-
-
-
