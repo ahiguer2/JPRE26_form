@@ -55,10 +55,9 @@ body {
 .hero__logo {
   width: 120px;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
+  border-color: var(--coral);
   background: var(--rose);
-box-shadow: 0 0 10px rgba(213, 107, 76, 0.8);
-filter: saturate(1.2);
 }
 
 .hero__tag {
