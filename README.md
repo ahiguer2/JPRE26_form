@@ -1,4 +1,4 @@
-﻿# Formulari d’inscripció (XVIII Jornada de Programació i Robòtica Educatives)
+# Formulari d’inscripció (XVIII Jornada de Programació i Robòtica Educatives)
 
 ## 1) Estructura del full de Google Sheets
 Crea un full amb dues pestanyes:
@@ -14,8 +14,9 @@ Inscripcions:
 - C: Centre
 - D: Localitat
 - E: Correu
-- F: TallerIds
-- G: Tallers (franja + nom)
+- F: Rol de participació
+- G: TallerIds
+- H: Tallers (franja + nom)
 
 ## 2) Apps Script
 - Obre Extensions > Apps Script.
@@ -33,5 +34,5 @@ Inscripcions:
 ## 4) Notes
 - La validació @xtec.cat es fa tant al frontend com al backend.
 - El sistema permet màxim 2 franges i 1 taller per franja.
-
+- El correu es comprova per evitar duplicats.
 
