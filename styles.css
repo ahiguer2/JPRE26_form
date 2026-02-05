@@ -56,7 +56,10 @@ body {
   border-left: 4px solid var(--coral);
   border-right: 4px solid var(--coral);
   background: var(--rose);
-  box-shadow: 0 0 12px rgba(213, 107, 76, 0.45);
+  box-shadow:
+  0 0 6px rgba(213, 107, 76, 0.85),
+  0 0 18px rgba(213, 107, 76, 0.6),
+  0 0 36px rgba(213, 107, 76, 0.35);
 }
 
 .hero__tag {
