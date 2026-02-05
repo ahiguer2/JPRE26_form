@@ -80,8 +80,8 @@ body {
   border-radius: 18px;
   border-left: 8px solid var(--coral);
   box-shadow:
-  0 0 15px rgba(213, 107, 76, 0.9),
-  0 0 22px rgba(213, 107, 76, 0.55);
+  0 0 6px rgba(213, 107, 76, 0.9),
+  0 0 10px rgba(213, 107, 76, 0.55);
 }
 
 .hero__rules {
