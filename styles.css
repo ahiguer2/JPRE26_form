@@ -39,8 +39,6 @@ body {
   gap: 24px;
   background: var(--card);
   border-radius: 24px;
-  border: 6px;
-  border-color: var(--coral);
   padding: 28px;
 }
 
@@ -48,6 +46,8 @@ body {
   display: flex;
   gap: 20px;
   align-items: center;
+  border: 6px;
+  border-color: var(--coral);
 }
 
 .hero__logo {
