@@ -1,4 +1,4 @@
-﻿const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnlk1OhghSo_PCC5xXZnqKqc7TVUZFJrexK-PxSCxp0ODWSA0ebfV0XKThSxDFFi7h/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnlk1OhghSo_PCC5xXZnqKqc7TVUZFJrexK-PxSCxp0ODWSA0ebfV0XKThSxDFFi7h/exec";
 
 function buildId(franja, nom) {
   return `${franja.toLowerCase().replace(/\s+/g, "-")}-${nom
@@ -50,12 +50,17 @@ const mockData = {
 const state = {
   data: null,
   selected: {},
+  emailChecking: false,
+  emailExists: false,
+  emailChecked: "",
 };
 
 const container = document.getElementById("workshop-container");
 const form = document.getElementById("registration-form");
 const confirmButton = document.getElementById("confirm-button");
 const message = document.getElementById("form-message");
+
+let emailCheckTimer = null;
 
 function availabilityClass(available, total) {
   const ratio = total === 0 ? 0 : available / total;
@@ -158,11 +163,13 @@ function getSelections() {
 function validateForm() {
   const email = form.elements.email.value.trim();
   const emailOk = email.endsWith("@xtec.cat");
+  const rolOk = form.elements.rol.value.trim();
   const requiredFilled =
     form.elements.nom.value.trim() &&
     form.elements.centre.value.trim() &&
     form.elements.localitat.value.trim() &&
-    emailOk;
+    emailOk &&
+    rolOk;
 
   const selectionsOk = Object.keys(state.selected).length >= 1;
 
@@ -170,7 +177,70 @@ function validateForm() {
     message.textContent = "El correu ha d’acabar en @xtec.cat.";
   }
 
-  confirmButton.disabled = !(requiredFilled && selectionsOk);
+  if (state.emailChecking) {
+    message.textContent = "Comprovant si ja estàs inscrit...";
+  }
+
+  if (state.emailExists) {
+    message.textContent = "Aquest correu ja està inscrit.";
+  }
+
+  confirmButton.disabled =
+    !(requiredFilled && selectionsOk) || state.emailChecking || state.emailExists;
+}
+
+function scheduleEmailCheck() {
+  const email = form.elements.email.value.trim();
+  if (!email || !email.endsWith("@xtec.cat")) {
+    state.emailChecking = false;
+    state.emailExists = false;
+    state.emailChecked = "";
+    validateForm();
+    return;
+  }
+
+  if (email === state.emailChecked) {
+    validateForm();
+    return;
+  }
+
+  if (emailCheckTimer) clearTimeout(emailCheckTimer);
+  emailCheckTimer = setTimeout(() => checkEmailExists(email), 400);
+}
+
+function checkEmailExists(email) {
+  state.emailChecking = true;
+  state.emailExists = false;
+  validateForm();
+
+  const callbackName = `checkEmail_${Date.now()}`;
+  const script = document.createElement("script");
+  const sep = WEB_APP_URL.includes("?") ? "&" : "?";
+
+  window[callbackName] = (data) => {
+    state.emailChecking = false;
+    state.emailExists = Boolean(data && data.exists);
+    state.emailChecked = email;
+    validateForm();
+    delete window[callbackName];
+    script.remove();
+  };
+
+  script.onerror = () => {
+    state.emailChecking = false;
+    state.emailExists = false;
+    message.textContent =
+      "No s'ha pogut validar el correu. Torna-ho a provar.";
+    validateForm();
+    delete window[callbackName];
+    script.remove();
+  };
+
+  script.src = `${WEB_APP_URL}${sep}checkEmail=${encodeURIComponent(
+    email
+  )}&callback=${callbackName}&_ts=${Date.now()}`;
+
+  document.body.appendChild(script);
 }
 
 function loadData() {
@@ -255,7 +325,13 @@ function postForm(payload) {
   tempForm.remove();
 }
 
-form.addEventListener("input", validateForm);
+form.addEventListener("input", (event) => {
+  if (event.target.name === "email") {
+    scheduleEmailCheck();
+  }
+  validateForm();
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   message.textContent = "";
@@ -270,6 +346,7 @@ form.addEventListener("submit", (event) => {
     centre: form.elements.centre.value.trim(),
     localitat: form.elements.localitat.value.trim(),
     email: form.elements.email.value.trim(),
+    rol: form.elements.rol.value.trim(),
     seleccions: getSelections(),
   };
 
@@ -277,9 +354,11 @@ form.addEventListener("submit", (event) => {
     confirmButton.disabled = true;
     postForm(payload);
     message.textContent =
-      "Inscripció enviada. Si hi ha places, quedarà registrada en uns segons.";
+      "Registre correcte. Gràcies per participar en la #JPRE26.";
     form.reset();
     state.selected = {};
+    state.emailChecked = "";
+    state.emailExists = false;
     setTimeout(loadData, 1200);
   } catch (error) {
     message.textContent = "Error en enviar la inscripció. Torna-ho a provar.";
@@ -289,10 +368,3 @@ form.addEventListener("submit", (event) => {
 });
 
 loadData();
-
-
-
-
-
-
-
