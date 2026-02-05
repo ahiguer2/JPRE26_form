@@ -46,8 +46,7 @@ body {
   display: flex;
   gap: 20px;
   align-items: center;
-  border: 6px;
-  border-color: var(--coral);
+  border: 6px solid var(--coral);
 }
 
 .hero__logo {
