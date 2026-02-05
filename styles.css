@@ -60,10 +60,10 @@ body {
 
 .hero__tag {
   margin: 0;
+  font-family: "Rubik", "Segoe UI", "Calibri", "Arial", sans-serif;
   font-weight: 700;
   color: var(--coral);
-  letter-spacing: 2px;
-  font-family: "Rubik", "Segoe UI", "Calibri", "Arial", sans-serif;
+  letter-spacing: 2px;  
 }
 
 .hero h1 {
